@@ -1,4 +1,3 @@
-from genericpath import exists
 from fastapi import FastAPI, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
 from starlette.responses import RedirectResponse
