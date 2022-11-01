@@ -29,8 +29,15 @@ def test_login(test_db):
 
 
 def test_shorten_url(test_db):
-    url = "www.google.com"
+    url = "https://www.google.com"
     response = client.post('/api/shortify', json={"long": url})
 
     assert response.status_code == 200
     assert response.json()['long'] == url
+
+def test_invalid_url(test_db):
+    url = "www.google.com"
+    response = client.post('/api/shortify', json={"long": url})
+
+    assert response.status_code == 400
+    assert response.json()['detail'] == "Invalid URL provided."
