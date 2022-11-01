@@ -4,11 +4,6 @@ from sqlalchemy.orm import Session
 from db import models, schemas
 import shortuuid
 
-
-def get_urls(db: Session):
-    return db.query(models.URL).all()
-
-
 def get_url(db: Session, short_url: str) -> schemas.URL | None:
     return db.query(models.URL).filter(models.URL.short == short_url).first()
 
@@ -36,10 +31,6 @@ def create_url(db: Session, url: schemas.URLCreate, user: schemas.User | None):
 
 def get_user(db: Session, username: str):
     return db.query(models.User).filter(models.User.username == username).first()
-
-
-def get_users(db: Session):
-    return db.query(models.User).all()
 
 
 def create_user(db: Session, username: str, hashed_password: str):
