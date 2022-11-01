@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-import datetime
+from datetime import datetime
 
 
 class URLBase(BaseModel):
@@ -13,7 +13,7 @@ class URLCreate(URLBase):
 class URL(URLBase):
     id: int
     short: str
-    date: datetime.datetime
+    date: datetime
     user: int | None
 
     class Config:

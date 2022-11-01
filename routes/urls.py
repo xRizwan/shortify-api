@@ -2,8 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.responses import RedirectResponse
 from sqlalchemy.orm import Session
 from dependencies import get_db, get_optional_current_user, get_current_user
-import db.schemas as schemas
-import db.crud as crud
+from db import schemas, crud
 from validators import url as url_validator
 
 router = APIRouter()

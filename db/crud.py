@@ -1,8 +1,7 @@
 from datetime import datetime
 from genericpath import exists
 from sqlalchemy.orm import Session
-import db.models as models
-import db.schemas as schemas
+from db import models, schemas
 import shortuuid
 
 
