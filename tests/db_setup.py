@@ -2,8 +2,8 @@ import pytest
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from main import app
-from deps import get_db
-from database import Base
+from dependencies import get_db
+from db.database import Base
 
 
 SQLALCHEMY_DATABASE_URL = "sqlite:///./test.db"

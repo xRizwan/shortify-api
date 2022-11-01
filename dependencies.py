@@ -6,12 +6,12 @@ from utils import (
     ALGORITHM,
     JWT_SECRET_KEY
 )
-from database import SessionLocal
+from db.database import SessionLocal
 from jose import jwt
 from pydantic import ValidationError
-from schemas import User
-from schemas import TokenPayload
-import crud
+from db.schemas import User
+from db.schemas import TokenPayload
+import db.crud as crud
 
 
 def get_db():

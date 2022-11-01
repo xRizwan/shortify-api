@@ -2,7 +2,7 @@ from datetime import datetime
 from sqlalchemy import Column, String, DateTime, Integer, ForeignKey
 from sqlalchemy.orm import relationship
 
-from database import Base
+from db.database import Base
 
 
 class URL(Base):
