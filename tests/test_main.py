@@ -1,5 +1,4 @@
 from fastapi.testclient import TestClient
-from fastapi.responses import Response
 from main import app
 from db_setup import test_db
 from utils import create_access_token
