@@ -11,6 +11,7 @@ from pydantic import ValidationError
 from db import crud
 from db.database import SessionLocal
 from db.schemas import User, TokenPayload
+from typing import Union
 
 
 def get_db():
@@ -28,7 +29,7 @@ reuseable_oauth = OAuth2PasswordBearer(
 )
 
 
-async def get_current_user(token: str | None = Depends(reuseable_oauth), db: Session = Depends(get_db)) -> User:
+async def get_current_user(token: Union[str, None] = Depends(reuseable_oauth), db: Session = Depends(get_db)) -> User:
     if (token == None):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -65,7 +66,7 @@ async def get_current_user(token: str | None = Depends(reuseable_oauth), db: Ses
     return user
 
 
-async def get_optional_current_user(token: str | None = Depends(reuseable_oauth), db: Session = Depends(get_db)):
+async def get_optional_current_user(token: Union[str, None] = Depends(reuseable_oauth), db: Session = Depends(get_db)):
     if token == None:
         return None
     return await get_current_user(token, db)

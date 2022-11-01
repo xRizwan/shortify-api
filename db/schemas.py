@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 from datetime import datetime
+from typing import Union
 
 
 class URLBase(BaseModel):
@@ -14,7 +15,7 @@ class URL(URLBase):
     id: int
     short: str
     date: datetime
-    user: int | None
+    user: Union[int, None]
 
     class Config:
         orm_mode = True

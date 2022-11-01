@@ -2,13 +2,14 @@ from datetime import datetime
 from genericpath import exists
 from sqlalchemy.orm import Session
 from db import models, schemas
+from typing import Union
 import shortuuid
 
-def get_url(db: Session, short_url: str) -> schemas.URL | None:
+def get_url(db: Session, short_url: str) -> Union[schemas.URL, None]:
     return db.query(models.URL).filter(models.URL.short == short_url).first()
 
 
-def create_url(db: Session, url: schemas.URLCreate, user: schemas.User | None):
+def create_url(db: Session, url: schemas.URLCreate, user: Union[schemas.User, None]):
     short_url = shortuuid.uuid()
     exists = get_url(db=db, short_url=short_url)
 
