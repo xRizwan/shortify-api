@@ -14,14 +14,21 @@ def get_url(db: Session, short_url: str) -> schemas.URL | None:
     return db.query(models.URL).filter(models.URL.short == short_url).first()
 
 
-def create_url(db: Session, url: schemas.URLCreate):
+def create_url(db: Session, url: schemas.URLCreate, user: schemas.User | None):
     short_url = shortuuid.uuid()
     exists = get_url(db=db, short_url=short_url)
 
     if (exists):
-        return create_url(db=db, url=url)
+        return create_url(db=db, url=url, user=user)
 
-    db_url = models.URL(short=short_url, long=url.long, date=datetime.now())
+    user_id = user.id if user else None
+
+    db_url = models.URL(
+        short=short_url,
+        long=url.long,
+        date=datetime.now(),
+        user=user_id
+    )
     db.add(db_url)
     db.commit()
     db.refresh(db_url)

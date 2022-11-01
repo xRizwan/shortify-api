@@ -14,6 +14,7 @@ class URL(URLBase):
     id: int
     short: str
     date: datetime.datetime
+    user: int | None
 
     class Config:
         orm_mode = True

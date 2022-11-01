@@ -4,29 +4,25 @@ from fastapi.security import OAuth2PasswordRequestForm
 from starlette.responses import RedirectResponse
 from database import engine
 from sqlalchemy.orm import Session
-from deps import get_current_user, get_db, get_optional_current_user
+from deps import get_db, get_current_user, get_optional_current_user
 import crud
 import models
 import schemas
 import utils
+import helpers
 
 models.Base.metadata.create_all(bind=engine)
 app = FastAPI()
 
 
 @app.get('/api/shortify', response_model=list[schemas.URL])
-def get_urls(db: Session = Depends(get_db), user: schemas.User = Depends(get_current_user)):
+def get_urls(db: Session = Depends(get_db), user: schemas.User = Depends(get_optional_current_user)):
     return crud.get_urls(db=db)
 
 
 @app.post("/api/shortify", response_model=schemas.URL)
-def shorten_url(url: schemas.URLCreate, db: Session = Depends(get_db), user: schemas.User = Depends(get_current_user)):
-    return crud.create_url(db=db, url=url)
-
-
-@app.get('/api/users', response_model=list[schemas.User])
-def get_users(db: Session = Depends(get_db)):
-    return crud.get_users(db=db)
+def shorten_url(url: schemas.URLCreate, db: Session = Depends(get_db), user: schemas.User | None = Depends(get_optional_current_user)):
+    return crud.create_url(db=db, url=url, user=user)
 
 
 @app.post('/api/users', response_model=schemas.User)
@@ -67,8 +63,6 @@ def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depend
 def redirect(short_url, db: Session = Depends(get_db)):
     db_url = crud.get_url(db=db, short_url=short_url)
     if (db_url):
-        if ("http" in db_url.long):
-            return RedirectResponse(url=db_url.long, headers={})
-        else:
-            return RedirectResponse(url=f"https://{db_url.long}")
+        valid_url = helpers.form_valid_url(db_url.long)
+        return RedirectResponse(valid_url)
     raise HTTPException(status_code=404, detail="Does not exist")
