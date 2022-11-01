@@ -1,4 +1,3 @@
-import os
 from passlib.context import CryptContext
 from datetime import datetime, timedelta
 from typing import Any
@@ -9,8 +8,8 @@ password_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 settings = get_settings()
 
-ACCESS_TOKEN_EXPIRE_MINUTES = 30  # 30 minutes
-REFRESH_TOKEN_EXPIRE_MINUTES = 60 * 24 * 7  # 7 days
+ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24 * 7
+REFRESH_TOKEN_EXPIRE_MINUTES = 60 * 24 * 14
 ALGORITHM = "HS256"
 JWT_SECRET_KEY = settings.JWT_SECRET_KEY
 JWT_REFRESH_SECRET_KEY = settings.JWT_REFRESH_SECRET_KEY
