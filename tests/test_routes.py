@@ -6,10 +6,10 @@ from .helpers import create_user, login_user
 
 client = TestClient(app)
 
+test_username = "testeruser1"
+test_password = "testpassword123"
 
 def test_create_user(test_db):
-    test_username = "testeruser1"
-    test_password = "testpassword123"
     response = create_user(client, test_username, test_password)
 
     assert response.status_code == 200
@@ -17,8 +17,6 @@ def test_create_user(test_db):
 
 
 def test_login(test_db):
-    test_username = "testeruser1"
-    test_password = "testpassword123"
     create_user(client, test_username, test_password)
     response = login_user(client, test_username, test_password)
 
