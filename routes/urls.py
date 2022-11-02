@@ -19,7 +19,7 @@ def shorten_url(url: schemas.URLCreate, db: Session = Depends(get_db), user: Uni
 def redirect(short_url, db: Session = Depends(get_db)):
     db_url = crud.get_url(db=db, short_url=short_url)
     if (db_url):
-        return RedirectResponse(db_url)
+        return RedirectResponse(db_url.long)
 
     raise HTTPException(
         status_code=status.HTTP_404_NOT_FOUND,
