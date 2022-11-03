@@ -1,6 +1,6 @@
 [Live](https://shortify-wine.vercel.app) - [Docs](https://shortify-wine.vercel.app/docs) - [ReDoc](https://shortify-wine.vercel.app/redoc)
 # URL shortner API.
-Small API that shortens urls. 
+Small API that shortens urls made with [FastAPI](https://fastapi.tiangolo.com/). 
 
 Setup:-
 - clone repo.
