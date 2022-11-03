@@ -8,7 +8,7 @@ from typing import Union
 
 router = APIRouter()
 
-@router.get("/api/shortify", response_model=list[schemas.URL])
+@router.get("/api/shortify", summary="Returns all the urls shortened by the user", response_model=list[schemas.URL])
 def get_users_urls(db: Session = Depends(get_db), user: schemas.User = Depends(get_current_user)):
     return crud.get_urls(db, user=user)
 
