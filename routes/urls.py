@@ -8,6 +8,9 @@ from typing import Union
 
 router = APIRouter()
 
+@router.get("/api/shortify", response_model=list[schemas.URL])
+def get_users_urls(db: Session = Depends(get_db), user: schemas.User = Depends(get_current_user)):
+    return crud.get_urls(db, user=user)
 
 @router.post("/api/shortify", summary="Shortens urls", response_model=schemas.URL)
 def shorten_url(url: schemas.URLCreate, db: Session = Depends(get_db), user: Union[schemas.User, None] = Depends(get_optional_current_user)):
@@ -15,7 +18,6 @@ def shorten_url(url: schemas.URLCreate, db: Session = Depends(get_db), user: Uni
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid URL provided.")
     return crud.create_url(db=db, url=url, user=user)
-
 
 @router.get("/{short_url}", summary="Redirects to the shortened url")
 def redirect(short_url, db: Session = Depends(get_db)):

@@ -8,6 +8,8 @@ import shortuuid
 def get_url(db: Session, short_url: str) -> Union[schemas.URL, None]:
     return db.query(models.URL).filter(models.URL.short == short_url).first()
 
+def get_urls(db: Session, user: schemas.User) -> Union[schemas.URL, None]:
+    return db.query(models.URL).filter(models.URL.user == user.id).all()
 
 def create_url(db: Session, url: schemas.URLCreate, user: Union[schemas.User, None]):
     short_url = shortuuid.uuid()
